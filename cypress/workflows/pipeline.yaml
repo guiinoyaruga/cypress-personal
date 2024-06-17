@@ -1,0 +1,35 @@
+name: pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Building and testing code
+    runs-on: ubuntu-latest
+    container: cypress/browsers:node16.18.0-chrome90-ff88
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "14.x"
+
+      - name: Install Dependencies
+        run: |
+          npm install --force
+          npm install cypress cypress-parallel cypress-repeat @cypress/grep @types/cypress @faker-js/faker -D cypress-json-results
+          npm install moment --save
+  
+      - name: Cypress Run
+        run: |
+          npx cypress run --headless
+
+ 
