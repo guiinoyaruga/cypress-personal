@@ -1,6 +1,5 @@
 describe('logoff test', () => {
     it('do logoff', () => {
-      // tag: teste
       cy.visit('https://www.google.com.br')
     })
   })
