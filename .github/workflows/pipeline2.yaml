@@ -15,6 +15,17 @@ jobs:
       matrix:
         containers: [1, 2] # Uses 2 parallel instances
     steps:
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "14.x"
+
+      - name: Install Dependencies
+        run: |
+          npm install --force
+          npm install cypress cypress-parallel cypress-repeat @cypress/grep @types/cypress @faker-js/faker -D cypress-json-results
+          npm install moment --save
+
       - name: Checkout
         uses: actions/checkout@v4
       - name: Cypress run
@@ -23,7 +34,7 @@ jobs:
         with:
           # Starts web server for E2E tests - replace with your own server invocation
           # https://docs.cypress.io/guides/continuous-integration/introduction#Boot-your-server
-          start: npx cypress run
+          start: npx cypress run --headless --env environmentName=alpha,grepTags=@teste
           # Records to Cypress Cloud
           # https://docs.cypress.io/guides/cloud/projects#Set-up-a-project-to-record
           record: true
