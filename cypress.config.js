@@ -2,11 +2,11 @@ const { defineConfig } = require("cypress");
 const grep = require("@cypress/grep/src/plugin");
 
 module.exports = defineConfig({
-  projectId: "6sbhfb",
   e2e: {
     setupNodeEvents(on, config) {
-      grep(config)
-      // implement node event listeners here
+      grep(config);
+
+      return config;
     },
   },
   component: {
@@ -15,4 +15,6 @@ module.exports = defineConfig({
   env: {
     grepFilterSpecs: true,
   },
+  chromeWebSecurity: false,
+  projectId: "6sbhfb",
 });
