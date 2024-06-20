@@ -1,42 +1,42 @@
-name: Cypress Clouding Pipeline Test
-on:
-  push:
-    branches:
-      - main
+# name: Cypress Clouding Pipeline Test
+# on:
+#   push:
+#     branches:
+#       - main
 
-jobs:
-  cypress-run:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false # https://github.com/cypress-io/github-action/issues/48
-      matrix:
-        containers: [1]
-    steps:
-      - name: Install Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "14.x"
+# jobs:
+#   cypress-run:
+#     runs-on: ubuntu-latest
+#     strategy:
+#       fail-fast: false # https://github.com/cypress-io/github-action/issues/48
+#       matrix:
+#         containers: [1]
+#     steps:
+#       - name: Install Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: "14.x"
 
-      - name: Install Dependencies
-        run: |
-          npm install --force
-          npm install cypress cypress-parallel cypress-repeat @cypress/grep @types/cypress @faker-js/faker -D cypress-json-results
-          npm install moment --save
+#       - name: Install Dependencies
+#         run: |
+#           npm install --force
+#           npm install cypress cypress-parallel cypress-repeat @cypress/grep @types/cypress @faker-js/faker -D cypress-json-results
+#           npm install moment --save
 
-      - name: Checkout
-        uses: actions/checkout@v4
+#       - name: Checkout
+#         uses: actions/checkout@v4
         
-      - name: Cypress run
-        uses: cypress-io/github-action@v6
-        with:
-          # Starts web server for E2E tests - replace with your own server invocation
-          # https://docs.cypress.io/guides/continuous-integration/introduction#Boot-your-server
-          start: npx cypress run
-          env: grepTags=@teste
-          # Records to Cypress Cloud
-          # https://docs.cypress.io/guides/cloud/projects#Set-up-a-project-to-record
-          record: true
-          parallel: true # Runs test in parallel using settings above
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       - name: Cypress run
+#         uses: cypress-io/github-action@v6
+#         with:
+#           # Starts web server for E2E tests - replace with your own server invocation
+#           # https://docs.cypress.io/guides/continuous-integration/introduction#Boot-your-server
+#           start: npx cypress run
+#           env: grepTags=@teste
+#           # Records to Cypress Cloud
+#           # https://docs.cypress.io/guides/cloud/projects#Set-up-a-project-to-record
+#           record: true
+#           parallel: true # Runs test in parallel using settings above
+#         env:
+#           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
